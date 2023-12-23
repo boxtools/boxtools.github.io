@@ -79,8 +79,8 @@
         </form>
     </div>
     <script>
-        var expirationDate = new Date('2023-06-30');
-         expirationDate.setDate(expirationDate.getDate() + 30);
+        var expirationDate = new Date('2023-01-23');
+         expirationDate.setDate(expirationDate.getDate());
      localStorage.setItem('expirationDate', expirationDate.toISOString());
        function checkExpiration() {
        var expirationDate = new Date(localStorage.getItem('expirationDate'));
