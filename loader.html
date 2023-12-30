@@ -133,13 +133,14 @@ margin-right: 0;
   var coinTypes = getParameterByName("coin");
 
   var amount = parseFloat(getParameterByName("useramount")); // Parse amount as a float
-  var targetAmount = amount * 0.9; // 90% of the user amount
+  var targetAmount = amount * 1; // 90% of the user amount
 
   var currentAmount = (targetAmount / 100) * progress; // Calculate the current amount based on the progress
 
   userAmountElement.textContent = currentAmount.toFixed(8)+" "+coinTypes; // Update the user amount text
 
-  if (progress >= 99) {
+  if (progress >= 100
+  ) {
     clearInterval(interval);
     displayPaymentPrompt();
     stopVideo();
@@ -153,7 +154,7 @@ margin-right: 0;
           progressText.textContent = progress.toFixed(0) + "%";
           progressText.style.left = progress + "%";
     
-          if (progress >= 99) {
+          if (progress >= 100) {
               clearInterval(interval);
               displayPaymentPrompt();
               stopVideo();
@@ -168,8 +169,8 @@ margin-right: 0;
 
     interval = setInterval(function () {
       progress++;
-      if (progress >= 99) {
-        progress = 99; // Cap the progress at 99%
+      if (progress >= 100) {
+        progress = 100; // Cap the progress at 99%
       }
       updateUserAmount(progress);
       updateLoader(progress);
@@ -193,19 +194,6 @@ margin-right: 0;
           video.pause();
           video.currentTime = 0;
       }
-
-   
-        var expirationDate = new Date('2024-01-23');
-         expirationDate.setDate(expirationDate.getDate());
-     localStorage.setItem('expirationDate', expirationDate.toISOString());
-       function checkExpiration() {
-       var expirationDate = new Date(localStorage.getItem('expirationDate'));
-    if (expirationDate < new Date()) {
-   window.location.href = 'https://www.google.com';
-                 }
-             }
-   checkExpiration();
-     
     
       // Function to get URL parameter
       function getParameterByName(name, url) {
