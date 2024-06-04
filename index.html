@@ -1,83 +1,49 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Hack the Wallet - Step 1</title>
-    <link rel="stylesheet" type="text/css" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 Not Found</title>
     <style>
         body {
+            background-color: #f0f0f0;
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            color: #333;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: #000;
-            color: #fff;
+            margin: 0;
         }
-
         .container {
-            text-align: center;
+            max-width: 600px;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
         }
-
         h1 {
-            font-size: 30px;
-            margin-bottom: 20px;
+            font-size: 72px;
+            margin: 0;
         }
-
-        .subtitle {
+        p {
             font-size: 18px;
-            margin-bottom: 20px;
         }
-
-        form {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+        a {
+            color: #007bff;
+            text-decoration: none;
         }
-
-        input,
-        select {
-            width: 300px;
-            height: 40px;
-            padding: 10px;
-            font-size: 16px;
-            margin-bottom: 10px;
-            border: none;
-            border-radius: 4px;
-        }
-
-        button {
-            width: 150px;
-            height: 40px;
-            font-size: 16px;
-            background-color: #4CAF50;
-            color: #fff;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background-color: #45a049;
+        a:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Decrypting the Wallet</h1>
-        <p class="subtitle">Enter the Wallet Address</p>
-        <form action="loader.html" method="GET">
-            <input type="text" name="wallet" placeholder="Enter User Wallet Address 1" required>
-            <input type="text" name="useramount" placeholder="Enter User crypto amount" required>
-            <input type="text" name="sendwallet" placeholder="Enter User Wallet Address 2" required>
-            <input type="text" name="amount" placeholder="Enter amount user will send" required>
-            <select name="coin" required>
-                <option value="">Select Coin Type</option>
-                <option value="BTC">Bitcoin (BTC)</option>
-                <option value="USDT">Tether (USDT)</option>
-                <option value="ETH">Ethereum (ETH)</option>
-            </select>
-            <button type="submit">Proceed</button>
-        </form>
+        <h1>404</h1>
+        <p>Oops! The page you're looking for doesn't exist.</p>
+        <p><a href="/">Go back to Home</a></p>
     </div>
- 
 </body>
 </html>
