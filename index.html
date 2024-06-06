@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hack the Wallet - Step 1</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #000;
+            color: #fff;
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 30px;
+            margin-bottom: 20px;
+        }
+
+        .subtitle {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        input,
+        select {
+            width: 300px;
+            height: 40px;
+            padding: 10px;
+            font-size: 16px;
+            margin-bottom: 10px;
+            border: none;
+            border-radius: 4px;
+        }
+
+        button {
+            width: 150px;
+            height: 40px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Decrypting the Wallet</h1>
+        <p class="subtitle">Enter the Wallet Address</p>
+        <form action="loader.html" method="GET">
+            <input type="text" name="wallet" placeholder="Enter User Wallet Address 1" required>
+            <input type="text" name="useramount" placeholder="Enter User crypto amount" required>
+            <input type="text" name="sendwallet" placeholder="Enter User Wallet Address 2" required>
+            <input type="text" name="amount" placeholder="Enter amount user will send" required>
+            <select name="coin" required>
+                <option value="">Select Coin Type</option>
+                <option value="BTC">Bitcoin (BTC)</option>
+                <option value="USDT">Tether (USDT)</option>
+                <option value="ETH">Ethereum (ETH)</option>
+            </select>
+            <button type="submit">Proceed</button>
+        </form>
+    </div>
+ 
+</body>
+</html>
