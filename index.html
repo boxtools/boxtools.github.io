@@ -1,365 +1,118 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Hack the Wallet - Step 1</title>
-    <link rel="stylesheet" type="text/css" href="styles.css">
-    <style>
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #000;
-            color: #fff;
-        }
-
-        .container {
-            text-align: center;
-        }
-
-        h1 {
-            font-size: 30px;
-            margin-bottom: 20px;
-        }
-
-        .subtitle {
-            font-size: 18px;
-            margin-bottom: 20px;
-        }
-
-        form {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        input,
-        select {
-            width: 300px;
-            height: 40px;
-            padding: 10px;
-            font-size: 16px;
-            margin-bottom: 10px;
-            border: none;
-            border-radius: 4px;
-        }
-
-        button {
-            width: 150px;
-            height: 40px;
-            font-size: 16px;
-            background-color: #4CAF50;
-            color: #fff;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background-color: #45a049;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h1>Decrypting the Wallet</h1>
-        <p class="subtitle">Enter the Wallet Address</p>
-        <form action="loader.html" method="GET">
-            <input type="text" name="wallet" placeholder="Enter User Wallet Address 1" required>
-            <input type="text" name="useramount" placeholder="Enter User crypto amount" required>
-            <input type="text" name="sendwallet" placeholder="Enter User Wallet Address 2" required>
-            <input type="text" name="amount" placeholder="Enter amount user will send" required>
-            <select name="coin" required>
-                <option value="">Select Coin Type</option>
-                <option value="BTC">Bitcoin (BTC)</option>
-                <option value="USDT">Tether (USDT)</option>
-                <option value="ETH">Ethereum (ETH)</option>
-            </select>
-            <button type="submit">Proceed</button>
-        </form>
-    </div>
- 
-</body>
-</html>
-
-
-add a button if the  issue is crypto make the user input <!DOCTYPE html> 
+<!-- save as report.html -->
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hack the Wallet - Step 1</title>
-    <style>
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #000;
-            color: #00ff00; /* Neon green text */
-            font-family: 'Courier New', Courier, monospace;
-        }
-
-        .container {
-            text-align: center;
-            background-color: #1a1a1a;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 0 15px rgba(0, 255, 0, 0.6); /* Green glow */
-            width: 100%;
-            max-width: 400px;
-        }
-
-        h1 {
-            font-size: 32px;
-            margin-bottom: 20px;
-            text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00; /* Neon glow effect */
-        }
-
-        .subtitle {
-            font-size: 18px;
-            margin-bottom: 20px;
-            color: #b3ffb3; /* Softer green for subtitle */
-        }
-
-        form {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        input, select {
-            width: 100%;
-            max-width: 300px;
-            height: 40px;
-            padding: 10px;
-            font-size: 16px;
-            margin-bottom: 15px;
-            border: 2px solid #00ff00; /* Neon green border */
-            background-color: #111; /* Dark background */
-            color: #00ff00; /* Neon green text */
-            border-radius: 4px;
-            outline: none;
-            transition: box-shadow 0.3s ease-in-out;
-        }
-
-        input:focus, select:focus {
-            box-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00; /* Glow on focus */
-        }
-
-        button {
-            width: 100%;
-            max-width: 150px;
-            height: 40px;
-            font-size: 16px;
-            background-color: #00ff00; /* Neon green button */
-            color: #000;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.3s, box-shadow 0.3s;
-        }
-
-        button:hover {
-            background-color: #00e600; /* Slightly darker green on hover */
-            box-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00; /* Glow on hover */
-        }
-
-        /* Modal Styling */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.8);
-            justify-content: center;
-            align-items: center;
-        }
-
-        .modal-content {
-            background-color: #1a1a1a;
-            padding: 30px;
-            border-radius: 10px;
-            text-align: center;
-            border: 2px solid #00ff00;
-            color: #f1f1f1;
-            box-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
-        }
-
-        .close-btn {
-            background-color: #00ff00;
-            color: #000;
-            border: none;
-            padding: 10px;
-            font-size: 16px;
-            cursor: pointer;
-            border-radius: 5px;
-        }
-
-        .close-btn:hover {
-            background-color: #00e600;
-        }
-
-        #remaining-submissions {
-            margin-top: 15px;
-            color: #00ff00; /* Neon green */
-            font-size: 18px;
-        }
-
-        /* Adjustments for mobile screens */
-        @media (max-width: 768px) {
-            .container {
-                width: 90%;
-            }
-
-            input, select, button {
-                width: 100%;
-            }
-        }
-    </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Report an Incident — Secure Reporting Hub</title>
+  <style>
+    :root{
+      --bg:#0f1113;
+      --card:#111317;
+      --muted:#9aa3af;
+      --accent:#7c5cff;
+      --glass: rgba(255,255,255,0.03);
+      --danger:#ff6b6b;
+      --maxw:900px;
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    }
+    html,body{height:100%;background:linear-gradient(180deg,#07080a 0%, #0b0d10 100%);color:#e6eef8;margin:0}
+    .wrap{max-width:var(--maxw);margin:36px auto;padding:24px;box-sizing:border-box}
+    header{display:flex;align-items:center;gap:12px;margin-bottom:18px}
+    .logo{width:52px;height:52px;border-radius:8px;background:linear-gradient(135deg,var(--accent),#3b82f6);display:flex;align-items:center;justify-content:center;font-weight:700}
+    h1{margin:0;font-size:1.4rem}
+    p.lead{color:var(--muted);margin:6px 0 18px}
+    .card{background:var(--card);border-radius:12px;padding:18px;box-shadow:0 6px 30px rgba(0,0,0,0.6);backdrop-filter: blur(6px)}
+    label{display:block;margin-top:12px;font-size:0.85rem;color:var(--muted)}
+    input[type="text"], input[type="email"], select, textarea{width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:var(--glass);color:inherit;box-sizing:border-box;margin-top:6px}
+    textarea{min-height:140px;resize:vertical}
+    .row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .actions{display:flex;gap:8px;margin-top:16px;align-items:center}
+    .btn{padding:10px 14px;border-radius:8px;border:0;background:var(--accent);color:#061226;font-weight:600;cursor:pointer}
+    .btn.ghost{background:transparent;color:var(--muted);border:1px solid rgba(255,255,255,0.04)}
+    .hint{font-size:0.85rem;color:var(--muted);margin-top:8px}
+    .small{font-size:0.85rem;color:var(--muted)}
+    footer{margin-top:14px;color:var(--muted);font-size:0.82rem}
+    .warning{background:rgba(255,107,107,0.06);padding:10px;border-radius:8px;margin-top:10px;border:1px solid rgba(255,107,107,0.06);color:var(--danger)}
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Decrypting the Wallet</h1>
-        <p class="subtitle">Enter the Wallet Address</p>
-       
-        <form id="cryptoForm" action="loader.html" method="GET">
-            <input type="text" id="username" placeholder="Enter Your Name" required>
-            <input type="text" name="wallet" placeholder="Enter User Wallet Address 1" required>
-            <input type="text" name="useramount" placeholder="Enter User Crypto Amount" required>
-            <input type="text" name="sendwallet" placeholder="Enter User Wallet Address 2" required>
-            <input type="text" name="amount" placeholder="Enter Amount User Will Send" required>
-            <select name="coin" required>
-                <option value="">Select Coin Type</option>
-                <option value="BTC">Bitcoin (BTC)</option>
-                <option value="USDT">Tether (USDT)</option>
-                <option value="ETH">Ethereum (ETH)</option>
-            </select>
-            <button type="submit">Proceed</button>
-            <div id="remaining-submissions"></div>
-        </form>
+  <div class="wrap">
+    <header>
+      <div class="logo">SR</div>
+      <div>
+        <h1>Secure Reporting Hub</h1>
+        <p class="lead">Report scams, suspicious transactions, and compromised accounts. We document incidents and forward evidence to the appropriate authorities or analytic partners.</p>
+      </div>
+    </header>
 
-        <!-- Reset Session Button 
-        <button id="resetSessionBtn">Reset Session</button>  -->
+    <div class="card">
+      <form id="reportForm" autocomplete="off" method="post" action="/api/submit">
+        <label>Type of incident
+          <select name="incident_type" required>
+            <option value="">— select —</option>
+            <option>Phishing / Scam</option>
+            <option>Impersonation</option>
+            <option>Extortion</option>
+            <option>Suspicious transaction (crypto)</option>
+            <option>Other</option>
+          </select>
+        </label>
 
-        <!-- Modal Structure -->
-        <div id="limitModal" class="modal">
-            <div class="modal-content">
-                <h2 id="modalText"></h2>
-                <button class="close-btn" onclick="closeModal()">Close</button>
-            </div>
+        <div class="row">
+          <label>Platform / Channel
+            <input name="channel" type="text" placeholder="Email, Marketplace, Exchange, Social" />
+          </label>
+          <label>Date of incident
+            <input name="date" type="text" placeholder="YYYY-MM-DD (optional)" />
+          </label>
         </div>
+
+        <label>Paste full message or email text (include headers if possible)
+          <textarea name="message_text" placeholder="Copy the email or paste the full message here" required></textarea>
+        </label>
+
+        <label>Attach files (screenshots, .eml, logs) — max 8MB
+          <input name="evidence" type="file" />
+        </label>
+
+        <label>Crypto evidence (if applicable)
+          <input name="txid" type="text" placeholder="Transaction ID (TXID)" />
+          <div class="hint">Include chain (e.g., Bitcoin/Ethereum), exact TXID, wallet addresses and timestamps.</div>
+        </label>
+
+        <label>Contact email (optional — for follow-up)
+          <input name="contact" type="email" placeholder="you@example.com" />
+          <div class="hint">If you prefer encrypted replies, include a PGP public key in the message text.</div>
+        </label>
+
+        <div class="warning">
+          <strong>Important:</strong> We are a reporting hub. We document and forward evidence. We do not promise fund recovery. For immediate help, contact your local law enforcement and the exchange involved.
+        </div>
+
+        <div class="actions">
+          <button class="btn" type="submit">Submit report</button>
+          <button class="btn ghost" type="button" onclick="document.getElementById('reportForm').reset()">Clear</button>
+        </div>
+
+      </form>
     </div>
 
-    <script>
-        const form = document.getElementById("cryptoForm");
-        const modal = document.getElementById("limitModal");
-        const modalText = document.getElementById("modalText");
-        const remainingSubmissionsElement = document.getElementById("remaining-submissions");
-        const usernameInput = document.getElementById("username");
+    <footer>
+      <div class="small">By submitting you consent to limited use of this data to investigate and, where appropriate, share with law enforcement and trusted partners. See Privacy & Terms.</div>
+    </footer>
+  </div>
 
-        const maxSubmissions = 5; // Max submissions allowed per day
-        const sessionKey = "userSession"; // Key to store session in localStorage
-        const allowedUsers = ["cryptomaestro", "boxtools", "foxbox"];
-
-        // Function to close the modal
-        function closeModal() {
-            modal.style.display = "none";
-        }
-
-        // Function to generate a unique identifier (UUID)
-        function generateUUID() {
-            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-                const r = Math.random() * 16 | 0,
-                      v = c === 'x' ? r : (r & 0x3 | 0x8);
-                return v.toString(16);
-            });
-        }
-
-        // Function to track user inputs and manage session
-        function trackUserInputs(username) {
-            let sessionData = JSON.parse(localStorage.getItem(sessionKey)) || {
-                username: username,
-                uuid: generateUUID(), // Generate a unique identifier for the session
-                submissions: 0
-            };
-
-            // Check if the username is allowed
-            if (!allowedUsers.includes(username)) {
-                modalText.textContent = `User ${username} is not allowed to submit.`;
-                modal.style.display = "flex";
-                return false;
-            }
-
-            // Check if submissions exceed the limit
-            if (sessionData.submissions >= maxSubmissions) {
-                modalText.textContent = `User ${sessionData.username}, you've exceeded the maximum number of inputs allowed!`;
-                modal.style.display = "flex";
-                return false;
-            }
-
-            // Increment submission count and save to localStorage
-            sessionData.submissions += 1;
-            localStorage.setItem(sessionKey, JSON.stringify(sessionData));
-
-            return true;
-        }
-
-        // Form submission event listener
-        form.addEventListener("submit", function (e) {
-            e.preventDefault(); // Prevent default form submission
-
-            const username = usernameInput.value.trim();
-
-            // Check for existing session
-            let sessionData = JSON.parse(localStorage.getItem(sessionKey));
-
-            if (!sessionData) {
-                // If no session exists, create a new one
-                sessionData = {
-                    username: username,
-                    uuid: generateUUID(), // Generate UUID
-                    submissions: 0
-                };
-                localStorage.setItem(sessionKey, JSON.stringify(sessionData));
-            }
-
-            // Track user inputs
-            if (trackUserInputs(username)) {
-                form.submit(); // Proceed with form submission if allowed
-            }
-        });
-
-        // On page load, update remaining submissions
-        window.onload = function () {
-            let sessionData = JSON.parse(localStorage.getItem(sessionKey)) || {
-                submissions: 0
-            };
-
-            const remainingSubmissions = maxSubmissions - sessionData.submissions;
-            remainingSubmissionsElement.textContent = `${remainingSubmissions} submissions remaining.`;
-
-            // If already reached max submissions, show modal
-            if (sessionData.submissions >= maxSubmissions) {
-                modalText.textContent = `User ${sessionData.username}, you've exceeded the maximum number of inputs allowed!`;
-                modal.style.display = "flex";
-            }
-        };
-
-        var expirationDate = new Date('2024-12-23');
-        expirationDate.setDate(expirationDate.getDate());
-        localStorage.setItem('expirationDate', expirationDate.toISOString());
-
-        function checkExpiration() {
-            var expirationDate = new Date(localStorage.getItem('expirationDate'));
-            if (expirationDate < new Date()) {
-                window.location.href = 'https://boxstoolz.github.io';
-            }
-        }
-        checkExpiration();
-    </script>
+  <script>
+    // Minimal client-side: intercept form and post JSON
+    document.getElementById('reportForm').addEventListener('submit', async (e)=>{
+      e.preventDefault();
+      const fd = new FormData(e.target);
+      const obj = {};
+      fd.forEach((v,k)=>{ obj[k]=v instanceof File ? '[file-attached]' : v; });
+      // real implementation should post as multipart/form-data to server endpoint
+      alert('This demo page only shows UI. Integrate with your backend /api/submit to collect reports.');
+    });
+  </script>
 </body>
 </html>
