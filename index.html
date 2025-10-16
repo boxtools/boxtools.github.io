@@ -2,117 +2,270 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Report an Incident — Secure Reporting Hub</title>
-  <style>
-    :root{
-      --bg:#0f1113;
-      --card:#111317;
-      --muted:#9aa3af;
-      --accent:#7c5cff;
-      --glass: rgba(255,255,255,0.03);
-      --danger:#ff6b6b;
-      --maxw:900px;
-      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-    }
-    html,body{height:100%;background:linear-gradient(180deg,#07080a 0%, #0b0d10 100%);color:#e6eef8;margin:0}
-    .wrap{max-width:var(--maxw);margin:36px auto;padding:24px;box-sizing:border-box}
-    header{display:flex;align-items:center;gap:12px;margin-bottom:18px}
-    .logo{width:52px;height:52px;border-radius:8px;background:linear-gradient(135deg,var(--accent),#3b82f6);display:flex;align-items:center;justify-content:center;font-weight:700}
-    h1{margin:0;font-size:1.4rem}
-    p.lead{color:var(--muted);margin:6px 0 18px}
-    .card{background:var(--card);border-radius:12px;padding:18px;box-shadow:0 6px 30px rgba(0,0,0,0.6);backdrop-filter: blur(6px)}
-    label{display:block;margin-top:12px;font-size:0.85rem;color:var(--muted)}
-    input[type="text"], input[type="email"], select, textarea{width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:var(--glass);color:inherit;box-sizing:border-box;margin-top:6px}
-    textarea{min-height:140px;resize:vertical}
-    .row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-    .actions{display:flex;gap:8px;margin-top:16px;align-items:center}
-    .btn{padding:10px 14px;border-radius:8px;border:0;background:var(--accent);color:#061226;font-weight:600;cursor:pointer}
-    .btn.ghost{background:transparent;color:var(--muted);border:1px solid rgba(255,255,255,0.04)}
-    .hint{font-size:0.85rem;color:var(--muted);margin-top:8px}
-    .small{font-size:0.85rem;color:var(--muted)}
-    footer{margin-top:14px;color:var(--muted);font-size:0.82rem}
-    .warning{background:rgba(255,107,107,0.06);padding:10px;border-radius:8px;margin-top:10px;border:1px solid rgba(255,107,107,0.06);color:var(--danger)}
-  </style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Incident Reporting Portal</title>
+<style>
+:root{
+  --bg:#06070a;
+  --panel:#0f1113;
+  --muted:#95a1ad;
+  --accent:#7c5cff;
+  --glass: rgba(255,255,255,0.03);
+  --warn:#f59e0b;
+  --danger:#ef4444;
+  --success:#16a34a;
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;background:
+  radial-gradient(1200px 600px at 10% 10%, rgba(124,92,255,0.04), transparent 8%),
+  linear-gradient(180deg,var(--bg) 0%, #07080a 100%);color:#e6eef8}
+.container{max-width:980px;margin:28px auto;padding:20px}
+.header{display:flex;gap:16px;align-items:center;margin-bottom:18px}
+.logo{width:64px;height:64px;border-radius:12px;background:linear-gradient(135deg,var(--accent),#3b82f6);display:flex;align-items:center;justify-content:center;font-weight:800}
+.title{line-height:1}
+h1{margin:0;font-size:1.4rem}
+.lead{color:var(--muted);margin-top:6px}
+.panel{background:var(--panel);border-radius:12px;padding:18px;box-shadow:0 20px 50px rgba(0,0,0,0.6);backdrop-filter:blur(6px)}
+label{display:block;color:var(--muted);font-size:0.95rem;margin-top:12px}
+input, select, textarea{width:100%;padding:10px;margin-top:8px;border-radius:10px;border:1px solid rgba(255,255,255,0.03);background:var(--glass);color:inherit}
+textarea{min-height:140px;resize:vertical}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.chip{padding:6px 10px;border-radius:8px;background:rgba(255,255,255,0.02);color:var(--muted);font-size:0.85rem}
+.actions{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap}
+.btn{padding:10px 14px;border-radius:10px;border:0;cursor:pointer;font-weight:700}
+.btn.primary{background:var(--accent);color:#071027}
+.btn.forward{background:transparent;border:1px solid #facc15;color:#facc15}
+.btn.ghost{background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--muted)}
+.warning{margin-top:14px;padding:12px;border-radius:10px;background:rgba(239,68,68,0.04);color:var(--danger);border:1px solid rgba(255,255,255,0.02)}
+.note{margin-top:10px;color:var(--muted)}
+.footer{margin-top:14px;color:var(--muted);font-size:0.9rem}
+.small{font-size:0.85rem;color:var(--muted)}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,0.65);display:none;align-items:center;justify-content:center;z-index:60}
+.modal.show{display:flex}
+.modal-box{background:var(--panel);padding:18px;border-radius:12px;max-width:560px;width:100%;box-shadow:0 18px 60px rgba(0,0,0,0.7)}
+.row-right{display:flex;justify-content:flex-end;gap:8px;margin-top:12px}
+.results{margin-top:12px;padding:12px;border-radius:8px;background:rgba(255,255,255,0.01);color:var(--muted)}
+@media (max-width:700px){ .grid{grid-template-columns:1fr} }
+</style>
 </head>
 <body>
-  <div class="wrap">
-    <header>
-      <div class="logo">SR</div>
-      <div>
-        <h1>Secure Reporting Hub</h1>
-        <p class="lead">Report scams, suspicious transactions, and compromised accounts. We document incidents and forward evidence to the appropriate authorities or analytic partners.</p>
+  <div class="container">
+    <div class="header">
+      <div class="logo">IR</div>
+      <div class="title">
+        <h1>Incident Reporting Portal</h1>
+        <div class="lead">Report scams, compromises, or suspicious crypto activity. Save evidence, request review, and ask us to forward information to exchanges or authorities.</div>
       </div>
-    </header>
+    </div>
 
-    <div class="card">
-      <form id="reportForm" autocomplete="off" method="post" action="/api/submit">
+    <div class="panel" role="main" aria-label="Incident reporting">
+      <form id="reportForm" autocomplete="off">
         <label>Type of incident
-          <select name="incident_type" required>
+          <select id="incidentType" required>
             <option value="">— select —</option>
             <option>Phishing / Scam</option>
             <option>Impersonation</option>
             <option>Extortion</option>
-            <option>Suspicious transaction (crypto)</option>
+            <option>Suspicious Crypto Transaction</option>
+            <option>Hacked Wallet</option>
+            <option>Rug Pull / Fake Project</option>
+            <option>Unauthorized Access</option>
             <option>Other</option>
           </select>
         </label>
 
-        <div class="row">
+        <div class="grid">
           <label>Platform / Channel
-            <input name="channel" type="text" placeholder="Email, Marketplace, Exchange, Social" />
+            <input id="channel" placeholder="e.g., Binance, Telegram, Email, Twitter" />
           </label>
+
           <label>Date of incident
-            <input name="date" type="text" placeholder="YYYY-MM-DD (optional)" />
+            <input id="date" type="date" />
           </label>
         </div>
 
-        <label>Paste full message or email text (include headers if possible)
-          <textarea name="message_text" placeholder="Copy the email or paste the full message here" required></textarea>
+        <label>Message / Email Text (include headers if possible)
+          <textarea id="message" placeholder="Paste the full message, email body, or transcript here" required></textarea>
         </label>
 
-        <label>Attach files (screenshots, .eml, logs) — max 8MB
-          <input name="evidence" type="file" />
+        <div id="cryptoBlock" class="small" style="display:none;margin-top:10px">
+          <div class="chips">
+            <div class="chip">
+              Network:
+              <select id="cryptoNetwork" style="background:transparent;border:0;color:inherit;margin-left:8px">
+                <option>Ethereum</option>
+                <option>Bitcoin</option>
+                <option>Binance Smart Chain</option>
+                <option>Solana</option>
+                <option>Other</option>
+              </select>
+            </div>
+
+            <div class="chip">
+              Asset:
+              <select id="cryptoAsset" style="background:transparent;border:0;color:inherit;margin-left:8px">
+                <option>BTC</option>
+                <option>ETH</option>
+                <option>USDT</option>
+                <option>USDC</option>
+                <option>BUSD</option>
+                <option>Other</option>
+              </select>
+            </div>
+
+            <div class="chip" style="align-items:center;display:flex">
+              TX / Wallet:
+              <input id="txid" placeholder="txid or wallet address" style="background:transparent;border:0;color:inherit;margin-left:8px" />
+            </div>
+          </div>
+          <div class="note">Tip: precise TXID, timestamp, and exchange account details (if any) help investigations.</div>
+        </div>
+
+        <label style="margin-top:12px">Attach evidence (screenshots, .eml, logs) — max 8MB
+          <input id="evidence" type="file" accept=".png,.jpg,.jpeg,.pdf,.eml,.txt" />
         </label>
 
-        <label>Crypto evidence (if applicable)
-          <input name="txid" type="text" placeholder="Transaction ID (TXID)" />
-          <div class="hint">Include chain (e.g., Bitcoin/Ethereum), exact TXID, wallet addresses and timestamps.</div>
+        <label style="margin-top:6px">Contact email (optional)
+          <input id="contact" type="email" placeholder="you@domain.com" />
         </label>
 
-        <label>Contact email (optional — for follow-up)
-          <input name="contact" type="email" placeholder="you@example.com" />
-          <div class="hint">If you prefer encrypted replies, include a PGP public key in the message text.</div>
-        </label>
-
-        <div class="warning">
-          <strong>Important:</strong> We are a reporting hub. We document and forward evidence. We do not promise fund recovery. For immediate help, contact your local law enforcement and the exchange involved.
+        <div class="warning" role="alert">
+          <strong>Important:</strong> We do not move or recover funds. Submitting a request to forward this case does not guarantee recovery. Follow the safe steps below and contact your exchange and local law enforcement immediately.
         </div>
 
         <div class="actions">
-          <button class="btn" type="submit">Submit report</button>
-          <button class="btn ghost" type="button" onclick="document.getElementById('reportForm').reset()">Clear</button>
+          <button type="button" id="saveBtn" class="btn primary">Save Report</button>
+          <button type="button" id="reviewBtn" class="btn ghost">Request Case Review</button>
+          <button type="button" id="forwardBtn" class="btn forward">Forward to Exchange / Authority</button>
         </div>
 
+        <div id="results" class="results" style="display:none"></div>
       </form>
-    </div>
 
-    <footer>
-      <div class="small">By submitting you consent to limited use of this data to investigate and, where appropriate, share with law enforcement and trusted partners. See Privacy & Terms.</div>
-    </footer>
+      <div class="footer">
+        <div class="small">Quick safety tips:</div>
+        <ul class="small" style="margin-top:6px;color:var(--muted)">
+          <li>Do not share private keys or seed phrases.</li>
+          <li>Save full TXIDs, timestamps, emails, and screenshots.</li>
+          <li>Contact your exchange support and local cybercrime unit immediately.</li>
+          <li>Consider freezing associated accounts where possible (exchange action only).</li>
+        </ul>
+      </div>
+    </div>
   </div>
 
-  <script>
-    // Minimal client-side: intercept form and post JSON
-    document.getElementById('reportForm').addEventListener('submit', async (e)=>{
-      e.preventDefault();
-      const fd = new FormData(e.target);
-      const obj = {};
-      fd.forEach((v,k)=>{ obj[k]=v instanceof File ? '[file-attached]' : v; });
-      // real implementation should post as multipart/form-data to server endpoint
-      alert('This demo page only shows UI. Integrate with your backend /api/submit to collect reports.');
-    });
-  </script>
+  <!-- Forward confirmation modal -->
+  <div id="forwardModal" class="modal" aria-hidden="true">
+    <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="forwardTitle">
+      <h3 id="forwardTitle">Confirm Forwarding</h3>
+      <p class="small" style="color:var(--muted);margin-top:8px">
+        You are requesting we forward the case details and attachments to an external recipient.
+        Choose the recipient and, if needed, add an instruction. We will log your request and require explicit consent to share.
+      </p>
+
+      <label style="margin-top:12px">Recipient
+        <select id="forwardRecipient" style="width:100%;margin-top:8px;padding:8px;border-radius:8px;background:var(--glass);border:1px solid rgba(255,255,255,0.03)">
+          <option value="exchange">Exchange / Platform Support</option>
+          <option value="law">Local Law Enforcement</option>
+          <option value="analytics">Blockchain Analytics Partner</option>
+        </select>
+      </label>
+
+      <label style="margin-top:10px">Optional Instruction
+        <textarea id="forwardNote" placeholder="Add context for recipient (optional)" style="width:100%;margin-top:8px;padding:8px;border-radius:8px;background:var(--glass);border:1px solid rgba(255,255,255,0.03)"></textarea>
+      </label>
+
+      <div class="row-right">
+        <button id="cancelForward" class="btn ghost">Cancel</button>
+        <button id="confirmForward" class="btn forward">Confirm & Forward</button>
+      </div>
+    </div>
+  </div>
+
+<script>
+  const incidentType = document.getElementById('incidentType');
+  const cryptoBlock = document.getElementById('cryptoBlock');
+  const saveBtn = document.getElementById('saveBtn');
+  const reviewBtn = document.getElementById('reviewBtn');
+  const forwardBtn = document.getElementById('forwardBtn');
+  const results = document.getElementById('results');
+  const forwardModal = document.getElementById('forwardModal');
+  const cancelForward = document.getElementById('cancelForward');
+  const confirmForward = document.getElementById('confirmForward');
+
+  incidentType.addEventListener('change', () => {
+    const cryptoOptions = ['Suspicious Crypto Transaction','Hacked Wallet','Rug Pull / Fake Project'];
+    cryptoBlock.style.display = cryptoOptions.includes(incidentType.value) ? 'block' : 'none';
+  });
+
+  function collect() {
+    return {
+      incident: incidentType.value || null,
+      channel: document.getElementById('channel').value || null,
+      date: document.getElementById('date').value || null,
+      message: document.getElementById('message').value || null,
+      cryptoNetwork: document.getElementById('cryptoNetwork') ? document.getElementById('cryptoNetwork').value : null,
+      cryptoAsset: document.getElementById('cryptoAsset') ? document.getElementById('cryptoAsset').value : null,
+      txid: document.getElementById('txid') ? document.getElementById('txid').value : null,
+      contact: document.getElementById('contact').value || null,
+      file: document.getElementById('evidence').files[0] ? document.getElementById('evidence').files[0].name : null
+    };
+  }
+
+  saveBtn.addEventListener('click', () => {
+    const data = collect();
+    // demo: show saved case id
+    const caseId = 'CASE-' + Math.floor(Math.random()*900000+100000);
+    results.style.display = 'block';
+    results.innerHTML = '<div><strong>Report saved</strong> — Case ID: <span class="small">'+caseId+'</span></div><div class="small" style="margin-top:8px;color:var(--muted)">'+JSON.stringify(data,null,2).replace(/\n/g,'<br>')+'</div>';
+    // TODO: replace with real backend POST to store report securely
+  });
+
+  reviewBtn.addEventListener('click', () => {
+    const data = collect();
+    results.style.display = 'block';
+    results.innerHTML = '<div class="small"><strong>Case review requested.</strong> Our analysts (or your admin) will review this report. Contact: support@yourdomain.example</div><pre class="small" style="color:var(--muted);margin-top:8px">'+JSON.stringify(data,null,2)+'</pre>';
+    // TODO: implement backend route to route to internal analyst queue
+  });
+
+  forwardBtn.addEventListener('click', () => {
+    // validation: need message and contact or txid for crypto forwarding
+    const data = collect();
+    if(!data.message || (cryptoBlock.style.display==='block' && !data.txid)) {
+      alert('Please include the message and (for crypto) the TXID or wallet address before forwarding.');
+      return;
+    }
+    forwardModal.classList.add('show');
+    forwardModal.setAttribute('aria-hidden','false');
+  });
+
+  cancelForward.addEventListener('click', () => {
+    forwardModal.classList.remove('show');
+    forwardModal.setAttribute('aria-hidden','true');
+  });
+
+  confirmForward.addEventListener('click', () => {
+    const recipient = document.getElementById('forwardRecipient').value;
+    const note = document.getElementById('forwardNote').value || '';
+    const data = collect();
+    // demo: show confirmation and log
+    results.style.display = 'block';
+    results.innerHTML = '<div><strong>Forward request sent</strong> — Recipient: <span class="small">'+recipient+'</span></div><div class="small" style="margin-top:8px;color:var(--muted)">In a real deployment we would forward case ID, evidence, and your note to the chosen recipient. You will be notified with next steps if they respond.</div><pre class="small" style="color:var(--muted);margin-top:8px">'+JSON.stringify({case:data,recipient,note},null,2)+'</pre>';
+    forwardModal.classList.remove('show');
+    forwardModal.setAttribute('aria-hidden','true');
+    // TODO: POST to backend endpoint that handles secure forwarding with logging & consent
+  });
+
+  // close modal with ESC
+  document.addEventListener('keydown', (e) => {
+    if(e.key==='Escape') {
+      forwardModal.classList.remove('show');
+      forwardModal.setAttribute('aria-hidden','true');
+    }
+  });
+</script>
 </body>
 </html>
