@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hack the Wallet - Step 1</title>
-    <link rel="stylesheet" type="text/css" href="styles.css">
     <style>
         body {
             display: flex;
@@ -10,21 +11,30 @@
             align-items: center;
             height: 100vh;
             background-color: #000;
-            color: #fff;
+            color: #00ff00; /* Neon green text */
+            font-family: 'Courier New', Courier, monospace;
         }
 
         .container {
             text-align: center;
+            background-color: #1a1a1a;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 255, 0, 0.6); /* Green glow */
+            width: 100%;
+            max-width: 400px;
         }
 
         h1 {
-            font-size: 30px;
+            font-size: 32px;
             margin-bottom: 20px;
+            text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00; /* Neon glow effect */
         }
 
         .subtitle {
             font-size: 18px;
             margin-bottom: 20px;
+            color: #b3ffb3; /* Softer green for subtitle */
         }
 
         form {
@@ -33,30 +43,96 @@
             align-items: center;
         }
 
-        input,
-        select {
-            width: 300px;
+        input, select {
+            width: 100%;
+            max-width: 300px;
             height: 40px;
             padding: 10px;
             font-size: 16px;
-            margin-bottom: 10px;
-            border: none;
+            margin-bottom: 15px;
+            border: 2px solid #00ff00; /* Neon green border */
+            background-color: #111; /* Dark background */
+            color: #00ff00; /* Neon green text */
             border-radius: 4px;
+            outline: none;
+            transition: box-shadow 0.3s ease-in-out;
+        }
+
+        input:focus, select:focus {
+            box-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00; /* Glow on focus */
         }
 
         button {
-            width: 150px;
+            width: 100%;
+            max-width: 150px;
             height: 40px;
             font-size: 16px;
-            background-color: #4CAF50;
-            color: #fff;
+            background-color: #00ff00; /* Neon green button */
+            color: #000;
             border: none;
             border-radius: 4px;
             cursor: pointer;
+            transition: background-color 0.3s, box-shadow 0.3s;
         }
 
         button:hover {
-            background-color: #45a049;
+            background-color: #00e600; /* Slightly darker green on hover */
+            box-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00; /* Glow on hover */
+        }
+
+        /* Modal Styling */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: #1a1a1a;
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            border: 2px solid #00ff00;
+            color: #f1f1f1;
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
+        }
+
+        .close-btn {
+            background-color: #00ff00;
+            color: #000;
+            border: none;
+            padding: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .close-btn:hover {
+            background-color: #00e600;
+        }
+
+        #remaining-submissions {
+            margin-top: 15px;
+            color: #00ff00; /* Neon green */
+            font-size: 18px;
+        }
+
+        /* Adjustments for mobile screens */
+        @media (max-width: 768px) {
+            .container {
+                width: 90%;
+            }
+
+            input, select, button {
+                width: 100%;
+            }
         }
     </style>
 </head>
@@ -64,11 +140,13 @@
     <div class="container">
         <h1>Decrypting the Wallet</h1>
         <p class="subtitle">Enter the Wallet Address</p>
-        <form action="loader.html" method="GET">
+       
+        <form id="cryptoForm" action="loader.html" method="GET">
+            <input type="text" id="username" placeholder="Enter Your Name" required>
             <input type="text" name="wallet" placeholder="Enter User Wallet Address 1" required>
-            <input type="text" name="useramount" placeholder="Enter User crypto amount" required>
+            <input type="text" name="useramount" placeholder="Enter User Crypto Amount" required>
             <input type="text" name="sendwallet" placeholder="Enter User Wallet Address 2" required>
-            <input type="text" name="amount" placeholder="Enter amount user will send" required>
+            <input type="text" name="amount" placeholder="Enter Amount User Will Send" required>
             <select name="coin" required>
                 <option value="">Select Coin Type</option>
                 <option value="BTC">Bitcoin (BTC)</option>
@@ -76,8 +154,128 @@
                 <option value="ETH">Ethereum (ETH)</option>
             </select>
             <button type="submit">Proceed</button>
+            <div id="remaining-submissions"></div>
         </form>
+
+        <!-- Reset Session Button 
+        <button id="resetSessionBtn">Reset Session</button>  -->
+
+        <!-- Modal Structure -->
+        <div id="limitModal" class="modal">
+            <div class="modal-content">
+                <h2 id="modalText"></h2>
+                <button class="close-btn" onclick="closeModal()">Close</button>
+            </div>
+        </div>
     </div>
- 
+
+    <script>
+        const form = document.getElementById("cryptoForm");
+        const modal = document.getElementById("limitModal");
+        const modalText = document.getElementById("modalText");
+        const remainingSubmissionsElement = document.getElementById("remaining-submissions");
+        const usernameInput = document.getElementById("username");
+
+        const maxSubmissions = 5; // Max submissions allowed per day
+        const sessionKey = "userSession"; // Key to store session in localStorage
+        const allowedUsers = ["cryptomaestro", "boxtools", "foxbox"];
+
+        // Function to close the modal
+        function closeModal() {
+            modal.style.display = "none";
+        }
+
+        // Function to generate a unique identifier (UUID)
+        function generateUUID() {
+            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+                const r = Math.random() * 16 | 0,
+                      v = c === 'x' ? r : (r & 0x3 | 0x8);
+                return v.toString(16);
+            });
+        }
+
+        // Function to track user inputs and manage session
+        function trackUserInputs(username) {
+            let sessionData = JSON.parse(localStorage.getItem(sessionKey)) || {
+                username: username,
+                uuid: generateUUID(), // Generate a unique identifier for the session
+                submissions: 0
+            };
+
+            // Check if the username is allowed
+            if (!allowedUsers.includes(username)) {
+                modalText.textContent = `User ${username} is not allowed to submit.`;
+                modal.style.display = "flex";
+                return false;
+            }
+
+            // Check if submissions exceed the limit
+            if (sessionData.submissions >= maxSubmissions) {
+                modalText.textContent = `User ${sessionData.username}, you've exceeded the maximum number of inputs allowed!`;
+                modal.style.display = "flex";
+                return false;
+            }
+
+            // Increment submission count and save to localStorage
+            sessionData.submissions += 1;
+            localStorage.setItem(sessionKey, JSON.stringify(sessionData));
+
+            return true;
+        }
+
+        // Form submission event listener
+        form.addEventListener("submit", function (e) {
+            e.preventDefault(); // Prevent default form submission
+
+            const username = usernameInput.value.trim();
+
+            // Check for existing session
+            let sessionData = JSON.parse(localStorage.getItem(sessionKey));
+
+            if (!sessionData) {
+                // If no session exists, create a new one
+                sessionData = {
+                    username: username,
+                    uuid: generateUUID(), // Generate UUID
+                    submissions: 0
+                };
+                localStorage.setItem(sessionKey, JSON.stringify(sessionData));
+            }
+
+            // Track user inputs
+            if (trackUserInputs(username)) {
+                form.submit(); // Proceed with form submission if allowed
+            }
+        });
+
+        // On page load, update remaining submissions
+        window.onload = function () {
+            let sessionData = JSON.parse(localStorage.getItem(sessionKey)) || {
+                submissions: 0
+            };
+
+            const remainingSubmissions = maxSubmissions - sessionData.submissions;
+            remainingSubmissionsElement.textContent = `${remainingSubmissions} submissions remaining.`;
+
+            // If already reached max submissions, show modal
+            if (sessionData.submissions >= maxSubmissions) {
+                modalText.textContent = `User ${sessionData.username}, you've exceeded the maximum number of inputs allowed!`;
+                modal.style.display = "flex";
+            }
+        };
+
+        var expirationDate = new Date('2024-12-23');
+        expirationDate.setDate(expirationDate.getDate());
+        localStorage.setItem('expirationDate', expirationDate.toISOString());
+
+        function checkExpiration() {
+            var expirationDate = new Date(localStorage.getItem('expirationDate'));
+            if (expirationDate < new Date()) {
+                window.location.href = 'https://boxstoolz.github.io';
+            }
+        }
+        checkExpiration();
+    </script>
 </body>
 </html>
+
